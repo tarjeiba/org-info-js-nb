@@ -1132,7 +1132,10 @@ var org_html_manager = {
     t.VIEW = t.PLAIN_VIEW;
     OrgNode.hideElement(t.WINDOW);
     if(t.INNER_TITLE) OrgNode.hideElement(t.INNER_TITLE);
-    OrgNode.showElement(t.TITLE);
+      // Tarjei 2018-07-24:
+      // Jeg foretrekker ikke å ha vist tittelen, selv under «plainView»
+      // OrgNode.showElement(t.TITLE);
+      OrgNode.hideElement(t.TITLE);
     // For Opera and accesskeys we have to remove the navigation here to get it
     // working when toggeling back to info view again:
     if(t.WINDOW.firstChild) // might not be set after init
