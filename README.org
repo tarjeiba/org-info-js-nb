@@ -1,0 +1,9 @@
+#+TITLE: Org-info-js
+
+* Opprinnelig fork
+Arbeidet med dette skriptet blei i all hovedsag gjort av Sebastian Rose i perioden 2008 til 2010.
+
+Jeg tok en gaffel av skriptet 24. juni 2018, fra [[link:https://code.orgmode.org/bzg/worg/src/master/code/org-info-js][worg-repoet]].
+
+Det opprinnelige arbeidet er gitt ut under Gnu Public License, det samme er da endringene gjort her.
+
