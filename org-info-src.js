@@ -364,7 +364,9 @@ var org_html_manager = {
   POSTAMBLE: null,             // cache the 'postamble' element.
   // Private
   BASE_URL: document.URL,      // URL without '#sec-x.y.z'
-  Q_PARAM: "",                 // A query param like `?VIEW=content'
+  // BASE_URL_QUESTIONS: "https://github.com/tarjeiba/promo/issues/new",
+    BASE_URL_QUESTIONS: null,
+    Q_PARAM: "",                 // A query param like `?VIEW=content'
   ROOT: null,                  // Root element or our OrgNode tree
   NODE: null,                  // The current node
   TITLE: null,                 // Save the title for hide/show
@@ -415,10 +417,9 @@ var org_html_manager = {
   CLICK_TIMEOUT: null,         // Mousehandling
   SECNUM_MAP: {},              // Map section numbers to OrgNodes
   TOC_LINK: null,              // Last link used in TOC
-  HOOKS: { run_hooks: false,   // Hoooks. run_hooks is false until onReady() is run.
+    HOOKS: { run_hooks: false,   // Hoooks. run_hooks is false until onReady() is run.
            onShowSection: [],
            onReady: [] },
-
   /**
    * Setup the OrgHtmlManager for scanning.
    * Here the timeout func gets set, that tells the wakes up org_html_mager
@@ -1639,7 +1640,7 @@ var org_html_manager = {
           }
           t.warn("No previous sibling.");
         }
-        else if ('q' == s) {
+        else if ('Q' == s) {
           if(window.confirm("Really close this file?")) {
             window.close();
           }
@@ -1682,6 +1683,13 @@ var org_html_manager = {
           t.toggleGlobaly();
           t.toggleGlobaly();
           window.print();
+        }
+        else if ('q' == s) {
+	    // if(null == node) node = this.NODE;
+	    window.open(t.BASE_URL_QUESTIONS +
+			"?title=" + t.removeTags(t.NODE.HEADING.innerHTML) + 
+			"&body=" + "lenke" +
+			"&labels=spørsmål", '_blank');
         }
         else if ('f' == s) {
           if(t.VIEW != t.INFO_VIEW) {
