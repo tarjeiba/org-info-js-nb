@@ -1655,19 +1655,19 @@ var org_html_manager = {
         }
         else if ('v' == s) {
           if(window.innerHeight)
-            window.scrollBy(0, window.innerHeight - 30);
+            window.scrollBy(0, window.innerHeight - 45);
           else if(document.documentElement.clientHeight)
-            window.scrollBy(0, document.documentElement.clientHeight - 30);
+            window.scrollBy(0, document.documentElement.clientHeight - 45);
           else
-            window.scrollBy(0, document.body.clientHeight - 30);
+            window.scrollBy(0, document.body.clientHeight - 45);
         }
         else if ('V' == s) {
           if(window.innerHeight)
-            window.scrollBy(0, -(window.innerHeight - 30));
+            window.scrollBy(0, -(window.innerHeight - 45));
           else if(document.documentElement.clientHeight)
-            window.scrollBy(0, -(document.documentElement.clientHeight - 30));
+            window.scrollBy(0, -(document.documentElement.clientHeight - 45));
           else
-            window.scrollBy(0, -(document.body.clientHeight - 30));
+            window.scrollBy(0, -(document.body.clientHeight - 45));
         }
         else if ('u' == s) {
           if(t.NODE.PARENT != t.ROOT) {
