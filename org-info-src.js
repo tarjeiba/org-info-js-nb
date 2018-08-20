@@ -399,6 +399,7 @@ var org_html_manager = {
   MESSAGING_TOP: 2,
   // show help:
   HELPING: false,
+	SYNTAXING: false,
   // console in read mode?
   READING: false,
   // if yes, which command caused the readmode?
@@ -641,7 +642,7 @@ var org_html_manager = {
     }
 
     if(t.STARTUP_MESSAGE) {
-      t.warn("This page uses org-info.js. Press '?' for more information.", true);
+			t.warn("Denne siden bruker org-info.js. Trykk `?' for mer informasjon.", true);
     }
     t.HOOKS.run_hooks = true;                    // Unblock all hooks.
     t.runHooks('onReady', this.NODE);
@@ -1336,7 +1337,7 @@ var org_html_manager = {
     var T = this;
     var i = T.NODE.IDX + 1;
     if(i<T.SECS.length) T.navigateTo(i);
-    else T.warn("Already last section.");
+    else T.warn("Allerede siste seksjon.");
   },
 
   previousSection: function()
@@ -1344,7 +1345,7 @@ var org_html_manager = {
     var t = this;
     var i = t.NODE.IDX;
     if(i>0) t.navigateTo(i-1);
-    else t.warn("Already first section.");
+    else t.warn("Allerede første seksjon.");
   },
 
 
@@ -1401,7 +1402,7 @@ var org_html_manager = {
       else if(t.HFO && history.length) history.forward();
       else {
         t.HFO=1;
-        t.warn("History: No where to foreward go from here. Any key and `B' to move to next file in history.");
+				t.warn("Historie: Ingen vei framover herfra. Hvilken som helst knapp og `B' for å gå til neste fil.");
       }
     } else {
       if(t.HISTORY[t.HIST_INDEX - 1]) {
@@ -1421,7 +1422,7 @@ var org_html_manager = {
       else if(t.HBO && history.length) history.back();
       else {
         t.HBO=1;
-        t.warn("History: No where to back go from here. Any key and `b' to move to previous file in history.");
+				t.warn("Historie: Ingen vei bakover herfra. Hvilken som helst knapp og `b' for å gå til forrige fil.");
       }
     }
   },
@@ -1527,6 +1528,7 @@ var org_html_manager = {
     // return, if s is empty:
     if(0 == s.length) {
       if(t.HELPING) { t.showHelp(); return; }
+			if(t.SYNTAXING) {t.showSyntax(); return; }
       if(t.MESSAGING && !t.READING) t.removeWarning();
         return;
     }
@@ -1599,7 +1601,7 @@ var org_html_manager = {
           else if(t.NODE.IDX < t.SECS.length - 1) {
             t.navigateTo(t.NODE.IDX + 1);
           } else {
-            t.warn("Already last section.");
+						t.warn("Allerede siste seksjon.");
             return;                          // rely on what happends if messaging
           }
         }
@@ -1615,14 +1617,14 @@ var org_html_manager = {
               ++idx;
             }
           }
-          t.warn("No next sibling.");
+					t.warn("Ingen neste søsken.");
           return;                          // rely on what happends if messaging
         }
         else if ('p' == s) {
           if(t.NODE.IDX > 0) {
             t.navigateTo(t.NODE.IDX - 1);
           } else {
-            t.warn("Already first section.");
+						t.warn("Allerede første seksjon.");
             return;                          // rely on what happends if messaging
           }
         }
@@ -1638,10 +1640,10 @@ var org_html_manager = {
               --idx;
             }
           }
-          t.warn("No previous sibling.");
+					t.warn("Ingen forrige søsken");
         }
         else if ('Q' == s) {
-          if(window.confirm("Really close this file?")) {
+          if(window.confirm("Vil du virkelig stenge filan?")) {
             window.close();
           }
         }
@@ -1655,19 +1657,19 @@ var org_html_manager = {
         }
         else if ('v' == s) {
           if(window.innerHeight)
-            window.scrollBy(0, window.innerHeight - 45);
+            window.scrollBy(0, window.innerHeight - 30);
           else if(document.documentElement.clientHeight)
-            window.scrollBy(0, document.documentElement.clientHeight - 45);
+            window.scrollBy(0, document.documentElement.clientHeight - 30);
           else
-            window.scrollBy(0, document.body.clientHeight - 45);
+            window.scrollBy(0, document.body.clientHeight - 30);
         }
         else if ('V' == s) {
           if(window.innerHeight)
-            window.scrollBy(0, -(window.innerHeight - 45));
+            window.scrollBy(0, -(window.innerHeight - 30));
           else if(document.documentElement.clientHeight)
-            window.scrollBy(0, -(document.documentElement.clientHeight - 45));
+            window.scrollBy(0, -(document.documentElement.clientHeight - 30));
           else
-            window.scrollBy(0, -(document.body.clientHeight - 45));
+            window.scrollBy(0, -(document.body.clientHeight - 30));
         }
         else if ('u' == s) {
           if(t.NODE.PARENT != t.ROOT) {
@@ -1706,9 +1708,14 @@ var org_html_manager = {
         else if ('?' == s || '¿' == s) {
           t.showHelp();
         }
-        else if ('C' == s) {
+				else if ('y' == s) {
+					window.open('https://tarjeiba.github.io/promo/syntaks.html','_blank');
+					// t.showSyntax();
+				}
+        
+				else if ('C' == s) {
           if(t.SORTED_TAGS.length) t.showTagsIndex();
-          else t.warn("No Tags found.");
+          else t.warn("Ingen tags funnet.");
         }
         else if ('H' == s && t.LINK_HOME) {
           window.document.location.href = t.LINK_HOME;
@@ -1724,9 +1731,9 @@ var org_html_manager = {
             t.startRead(t.READ_COMMAND_HTML_LINK, "Choose HTML-link type: 's' = section, 'o' = occur");
           } else {
             t.startRead(s, "HTML-link:",
-                           '<a href="' + t.BASE_URL +  t.getDefaultTarget() + '">' +
-                           document.title + ", Sec. '" + t.removeTags(t.NODE.HEADING.innerHTML) + "'</a>",
-                           "C-c to copy, ");
+                        '<a href="' + t.BASE_URL +  t.getDefaultTarget() + '">' +
+                        document.title + ", Sec. '" + t.removeTags(t.NODE.HEADING.innerHTML) + "'</a>",
+                        "C-c to copy, ");
             window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.select();}, 100);
           }
           return;
@@ -1736,9 +1743,9 @@ var org_html_manager = {
             t.startRead(t.READ_COMMAND_ORG_LINK, "Choose Org-link type: 's' = section, 'o' = occur");
           } else {
             t.startRead(s, "Org-link:",
-                           '[[' + t.BASE_URL + t.getDefaultTarget() + '][' +
-                           document.title + ", Sec. '" + t.removeTags(t.NODE.HEADING.innerHTML) + "']]",
-                           "C-c to copy, ");
+                        '[[' + t.BASE_URL + t.getDefaultTarget() + '][' +
+                        document.title + ", Sec. '" + t.removeTags(t.NODE.HEADING.innerHTML) + "']]",
+                        "C-c to copy, ");
             window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.select();}, 100);
           }
           return;
@@ -1747,8 +1754,8 @@ var org_html_manager = {
           if("" != t.OCCUR) {
             t.startRead(t.READ_COMMAND_PLAIN_URL_LINK, "Choose Org-link type: 's' = section, 'o' = occur");
           } else {
-              t.startRead(s, "Plain URL Link:", t.BASE_URL + t.getDefaultTarget(),
-                             "C-c to copy, ");
+            t.startRead(s, "Plain URL Link:", t.BASE_URL + t.getDefaultTarget(),
+                        "C-c to copy, ");
             window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.select();}, 100);
           }
           return;
@@ -1757,47 +1764,46 @@ var org_html_manager = {
           t.startRead(s, "Enter section number:");
           return;
         }
-        else if ('o' == s) {
-          if("" != t.OCCUR) t.startRead(s, "Occur:", t.OCCUR, "RET to use previous, DEL ");
-          else t.startRead(s, "Occur:", t.OCCUR);
-          window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.value=org_html_manager.OCCUR;org_html_manager.CONSOLE_INPUT.select();}, 100);
-          return;
-        }
-        else if ('s' == s) {
-          if("" != t.OCCUR) t.startRead(s, "Search forward:", t.OCCUR, "RET to use previous, DEL ");
-          else t.startRead(s, "Search forward:", t.OCCUR);
-          window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.value=org_html_manager.OCCUR;org_html_manager.CONSOLE_INPUT.select();}, 100);
-          return;
-        }
-        else if ('S' == s) {
-          if("" == t.OCCUR) {
-            s = "s";
-            t.startRead(s, "Search forward:");
-          }
-          else {
-            t.READ_COMMAND = s;
-            t.evalReadCommand();
-          }
-          return;
-        }
-        else if ('r' == s) {
-          if("" != t.OCCUR) t.startRead(s, "Search backwards:", t.OCCUR, "RET to use previous, DEL ");
-          else t.startRead(s, "Search backwards:", t.OCCUR);
-          window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.value=org_html_manager.OCCUR;org_html_manager.CONSOLE_INPUT.select();}, 100);
-          return;
-        }
-        else if ('R' == s) {
-          if("" == t.OCCUR) {
-            s = "r";
-            t.startRead(s, "Search backwards:");
-          }
-          else {
-            t.READ_COMMAND = s;
-            t.evalReadCommand();
-          }
-          return;
-        }
+        // else if ('o' == s) {
+        //   if("" != t.OCCUR) t.startRead(s, "Occur:", t.OCCUR, "RET to use previous, DEL ");
+        //   else t.startRead(s, "Occur:", t.OCCUR);
+        //   window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.value=org_html_manager.OCCUR;org_html_manager.CONSOLE_INPUT.select();}, 100);
+        //   return;
       }
+    else if ('s' == s) {
+      if("" != t.OCCUR) t.startRead(s, "Søk framover:", t.OCCUR, "RET for å bruke forrige, DEL ");
+      else t.startRead(s, "Søk framover:", t.OCCUR);
+      window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.value=org_html_manager.OCCUR;org_html_manager.CONSOLE_INPUT.select();}, 100);
+      return;
+    }
+    else if ('S' == s) {
+      if("" == t.OCCUR) {
+        s = "s";
+        t.startRead(s, "Søk framover:");
+      }
+      else {
+        t.READ_COMMAND = s;
+        t.evalReadCommand();
+      }
+      return;
+    }
+    else if ('r' == s) {
+      if("" != t.OCCUR) t.startRead(s, "Søk bakover:", t.OCCUR, "RET for å bruke forrige, DEL ");
+      else t.startRead(s, "Søk bakover:", t.OCCUR);
+      window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.value=org_html_manager.OCCUR;org_html_manager.CONSOLE_INPUT.select();}, 100);
+      return;
+    }
+    else if ('R' == s) {
+      if("" == t.OCCUR) {
+        s = "r";
+        t.startRead(s, "Search backwards:");
+      }
+      else {
+        t.READ_COMMAND = s;
+        t.evalReadCommand();
+      }
+      return;
+    }
 
     return;
   },
@@ -1828,7 +1834,7 @@ var org_html_manager = {
         t.navigateTo(sec.IDX);
         return;
       }
-      t.warn("Goto section: no such section.", false, result);
+			t.warn("Gå til seksjon: ingen slik seksjon funnet.", false, result);
       return;
     }
 
@@ -1848,7 +1854,7 @@ var org_html_manager = {
           return;
         }
       }
-      t.warn("Search forwards: text not found.", false, t.OCCUR);
+			t.warn("Søk framover: tekst ikke funnet.", false, t.OCCUR);
       t.OCCUR = restore;
       return;
     }
@@ -1861,7 +1867,7 @@ var org_html_manager = {
           return;
         }
       }
-      t.warn("Search forwards: text not found.", false, t.OCCUR);
+			t.warn("Søk framover: text ikke funnet.", false, t.OCCUR);
       return;
     }
 
@@ -1880,7 +1886,7 @@ var org_html_manager = {
           return;
         }
       }
-      t.warn("Search backwards: text not found.", false, t.OCCUR);
+			t.warn("Søk bakover: tekst ikke funnet.", false, t.OCCUR);
       t.OCCUR = restore;
       return;
     }
@@ -1894,7 +1900,7 @@ var org_html_manager = {
           return;
         }
       }
-      t.warn("Search backwards: text not found.", false, t.OCCUR);
+			t.warn("Søk bakover: tekst ikke funnet.", false, t.OCCUR);
       return;
     }
 
@@ -1911,8 +1917,8 @@ var org_html_manager = {
         }
       }
       if(0 == occurs.length) {
-        t.warn("Occur: text not found.", false, t.OCCUR);
-        t.OCCUR = restore;
+				t.warn("Occur: tekst ikke funnet.", false, t.OCCUR);
+				t.OCCUR = restore;
         return;
       }
 
@@ -1945,14 +1951,14 @@ var org_html_manager = {
                        "C-c to copy, ");
         window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.select();}, 100);
       } else {
-        t.warn(c + ": No such link type!");
+				t.warn(c + ": Ingen slik lenketype.");
       }
     }
 
     else if(command == t.READ_COMMAND_HTML_LINK) {
       var c = result.charAt(0);
       if('s' == c) {
-        t.startRead(t.READ_COMMAND_NULL, "HTML-link to this section:",
+        t.startRead(t.READ_COMMAND_NULL, "HTML-lenke til denne seksjonen:",
                        '<a href="' + t.BASE_URL + t.getDefaultTarget() + '">' +
                        document.title + ", Sec. '" +  t.removeTags(t.NODE.HEADING.innerHTML) + "'</a>",
                        "C-c to copy, ");
@@ -1964,7 +1970,7 @@ var org_html_manager = {
                        "C-c to copy, ");
         window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.select();}, 100);
       } else {
-        t.warn(c + ": No such link type!");
+        t.warn(c + ": Ingen slik lenketype.");
       }
     }
 
@@ -1981,7 +1987,7 @@ var org_html_manager = {
                        "C-c to copy, ");
         window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.select();}, 100);
       } else {
-        t.warn(c + ": No such link type!");
+        t.warn(c + ": Ingen slik lenketype.");
       }
     }
 
@@ -2118,7 +2124,6 @@ var org_html_manager = {
       |           | <b>Søking</b>                                        |
       | s / r     | søk framover / bakover...                            |
       | S / R     | søk igjen framover / bakover...                      |
-      | o         | occur-modus                                          |
       | c         | klarer søkemarkering                                 |
       |-----------+------------------------------------------------------|
       |           | <b>Ymse</b>                                          |
@@ -2130,8 +2135,8 @@ var org_html_manager = {
     if (t.HELPING) {
       t.LAST_VIEW_MODE = t.VIEW;
       if(t.PLAIN_VIEW == t.VIEW) t.infoView(true);
-      t.WINDOW.innerHTML = 'Press any key or <a href="javascript:org_html_manager.showHelp();">click here</a> to proceed.'
-        +'<h2>Keyboard Shortcuts</h2>'
+      t.WINDOW.innerHTML = 'Hvilken som helst knapp eller <a href="javascript:org_html_manager.showHelp();">trykk her</a> for å fortsette.'
+        +'<h2>Tastatursnarveier</h2>'
         +'<table cellpadding="3" rules="groups" frame="hsides" style="caption-side:bottom;margin:20px;border-style:none;" border="0";>'
         +'<caption><small>org-info.js, v.###VERSION###</small></caption>'
     +'<tbody>'
@@ -2155,7 +2160,6 @@ var org_html_manager = {
 	+'<tr><td><b>Søking</b></td></tr>'
 	+'<tr><td><code><b>s / r</b></code></td><td>søk framover / bakover...</td></tr>'
 	+'<tr><td><code><b>S / R</b></code></td><td>søk igjen framover / bakover...</td></tr>'
-	+'<tr><td><code><b>o</b></code></td><td>occur-modus</td></tr>'
 	+'<tr><td><code><b>c</b></code></td><td>klarer søkemarkering</td></tr>'
 	+'</tbody><tbody>'
 	+'<tr><td><b>Ymse</b></td></tr>'
@@ -2223,6 +2227,27 @@ var org_html_manager = {
     }
   },
 
+	showSyntax: function () {
+		var t = this;	
+		t.SYNTAXING = t.SYNTAXING ? 0 : 1;
+    if (t.SYNTAXING) {
+      t.LAST_VIEW_MODE = t.VIEW;
+      if(t.PLAIN_VIEW == t.VIEW) t.infoView(true);
+      t.WINDOW.innerHTML = 'TESTSYNTAKS';
+      window.scrollTo(0, 0);
+    }
+    else {
+      if(t.PLAIN_VIEW == t.LAST_VIEW_MODE) {
+        t.plainView();
+      }
+      else if(t.SLIDE_VIEW == t.LAST_VIEW_MODE) {
+        t.slideView();
+      }
+      t.showSection(t.NODE.IDX);
+    }
+  },
+
+	
 
   /*
     HOOKs
