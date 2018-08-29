@@ -919,7 +919,7 @@ var org_html_manager = {
       var html = '<table class="org-info-js_info-navigation" width="100%" border="0" style="border-bottom:1px solid black;">'
         +'<tr><td colspan="3" style="text-align:left;border-style:none;vertical-align:bottom;">'
         +'<span style="float:left;display:inline;text-align:left;">'
-        +'Top: <a accesskey="t" href="javascript:org_html_manager.navigateTo(0);">'+index_name+'</a></span>'
+        +'Topp: <a accesskey="t" href="javascript:org_html_manager.navigateTo(0);">'+index_name+'</a></span>'
         +'<span style="float:right;display:inline;text-align:right;font-size:70%;">'
         + this.LINKS
         +'<a accesskey="m" href="javascript:org_html_manager.toggleView('+i+');">toggle view</a></span>'
@@ -2168,7 +2168,7 @@ var org_html_manager = {
 	+'<tr><td><code><b>W</b></code></td><td>print</td></tr>'
       // END RECEIVE ORGTBL Shortcuts
        +'</tbody>'
-       +'</table><br />Press any key or <a href="javascript:org_html_manager.showHelp();">click here</a> to proceed.';
+       +'</table><br />Hvilken som helst knapp eller <a href="javascript:org_html_manager.showHelp();">trykk her</a> for å fortsette.';
       window.scrollTo(0, 0);
     }
     else {
