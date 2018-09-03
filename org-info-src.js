@@ -970,7 +970,7 @@ var org_html_manager = {
       {
         var navi2 = document.createElement("div");
         navi2.className="org-info-js_local-toc";
-        html = 'Contents:<br /><ul>';
+        html = 'Innhold:<br /><ul>';
         for(var k=0; k < this.SECS[i].CHILDREN.length; ++k) {
           html += '<li><a href="'
             +this.SECS[i].CHILDREN[k].L+'">'
@@ -2193,9 +2193,9 @@ var org_html_manager = {
       t.LAST_VIEW_MODE = t.VIEW;
       if(t.PLAIN_VIEW == t.VIEW) t.infoView(true);
       if(null == t.TAGS_INDEX) {
-        t.TAGS_INDEX = 'Press any key or <a href="javascript:org_html_manager.showTagsIndex();">click here</a> to proceed.'
-          +'<br /><br />Click the headlines to expand the contents.'
-          +'<h2>Index of Tags</h2>';
+        t.TAGS_INDEX = 'Hvilken som helst knapp eller <a href="javascript:org_html_manager.showTagsIndex();">trykk her</a> for å fortsette.'
+          +'<br /><br />Trykk på overskriftene for å utvide innholdet.'
+          +'<h2>Emneknaggindeks:</h2>';
         for(var i = 0; i < t.SORTED_TAGS.length; ++i) {
           var tag = t.SORTED_TAGS[i];
           var fid = 'org-html-manager-sorted-tags-' + tag;
@@ -2211,7 +2211,7 @@ var org_html_manager = {
           t.TAGS_INDEX += '</ul></div>';
 
         }
-        t.TAGS_INDEX += '<br />Press any key or <a href="javascript:org_html_manager.showTagsIndex();">click here</a> to proceed.';
+        t.TAGS_INDEX += '<br />Hvilken som helst knapp eller <a href="javascript:org_html_manager.showTagsIndex();">trykk her</a> to proceed.';
       }
       t.WINDOW.innerHTML = t.TAGS_INDEX;
       window.scrollTo(0, 0);
