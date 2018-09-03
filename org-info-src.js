@@ -929,13 +929,13 @@ var org_html_manager = {
         html += '<a accesskey="p" href="'+this.SECS[i-1].L
         +'" title="Go to: '+this.removeTags(this.SECS[i-1].HEADING.innerHTML)+'">Forrige</a> | ';
       else
-        html += 'Previous | ';
+        html += 'Forrige | ';
 
       if(i < this.SECS.length - 1)
         html += '<a accesskey="n" href="'+this.SECS[i+1].L
         +'" title="Go to: '+this.removeTags(this.SECS[i+1].HEADING.innerHTML)+'">Neste</a>';
       else
-        html += 'Next';
+        html += 'Neste';
 
       html += '</td><td style="text-align:center;vertical-align:bottom;border-style:none;width:56%;">';
 
