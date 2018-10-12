@@ -943,10 +943,10 @@ var org_html_manager = {
       if(i>0 && this.SECS[i].PARENT.PARENT) // != this.ROOT)
         html += '<a href="'+this.SECS[i].PARENT.L
         +'" title="Gå til: '+this.removeTags(this.SECS[i].PARENT.HEADING.innerHTML)+'">'
-        +'<span style="font-style:italic;">'
+        +'<span>'
         +this.SECS[i].PARENT.HEADING.innerHTML+'</span></a>';
       else
-        html += '<span style="font-style:italic;">'+this.SECS[i].HEADING.innerHTML+'</span>';
+        html += '<span>'+this.SECS[i].HEADING.innerHTML+'</span>';
 
       // Right:
       html += '</td><td style="text-align:right;vertical-align:bottom;border-style:none;width:22%">';
@@ -1184,7 +1184,7 @@ var org_html_manager = {
     OrgNode.hideElement(t.TITLE);
     if(t.INNER_TITLE) OrgNode.hideElement(t.INNER_TITLE);
     if(t.TOC) OrgNode.hideElement(t.TOC.DIV);
-    OrgNode.showElement(t.TITLE);
+            OrgNode.hideElement(t.TITLE);
     OrgNode.showElement(t.WINDOW);
     t.ROOT.hideAllChildren();
     OrgNode.hideElement(t.TOC.DIV);
