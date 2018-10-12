@@ -933,6 +933,7 @@ var org_html_manager = {
 
       if(i < this.SECS.length - 1)
         html += '<a accesskey="n" href="'+this.SECS[i+1].L
+
         +'" title="Gå til: '+this.removeTags(this.SECS[i+1].HEADING.innerHTML)+'">Neste</a>';
       else
         html += 'Neste';
@@ -1438,7 +1439,7 @@ var org_html_manager = {
     t.CONSOLE_INPUT.value = value;
     if(! harmless) t.CONSOLE_LABEL.style.color = "red";
     t.CONSOLE_LABEL.innerHTML = "<span style='float:left;'>"+what +"</span>"+
-    "<span style='float:right;color:#aaaaaa;font-weight:normal;'>(press any key to proceed)</span>";
+    "<span style='float:right;color:#aaaaaa;font-weight:normal;'>(hvilken som helst knapp for å fortsette)</span>";
     t.showConsole();
     // wait until keyup was processed:
     window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.value=value;}, 50);
@@ -1452,7 +1453,7 @@ var org_html_manager = {
     t.READ_COMMAND = command;
     t.READING = true;
     t.CONSOLE_LABEL.innerHTML = "<span style='float:left;'>"+label+"</span>"+
-    "<span style='float:right;color:#aaaaaa;font-weight:normal;'>("+shortcuts+"RET to close)</span>";
+    "<span style='float:right;color:#aaaaaa;font-weight:normal;'>("+shortcuts+"ENTER for å lukke)</span>";
     t.showConsole();
     document.onkeypress=null;
     t.CONSOLE_INPUT.focus();
@@ -1733,7 +1734,7 @@ var org_html_manager = {
             t.startRead(s, "HTML-link:",
                         '<a href="' + t.BASE_URL +  t.getDefaultTarget() + '">' +
                         document.title + ", Sec. '" + t.removeTags(t.NODE.HEADING.innerHTML) + "'</a>",
-                        "C-c to copy, ");
+                        "C-c for å kopiere, ");
             window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.select();}, 100);
           }
           return;
@@ -1745,7 +1746,7 @@ var org_html_manager = {
             t.startRead(s, "Org-link:",
                         '[[' + t.BASE_URL + t.getDefaultTarget() + '][' +
                         document.title + ", Sec. '" + t.removeTags(t.NODE.HEADING.innerHTML) + "']]",
-                        "C-c to copy, ");
+                        "C-c for å kopiere, ");
             window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.select();}, 100);
           }
           return;
@@ -1755,13 +1756,13 @@ var org_html_manager = {
             t.startRead(t.READ_COMMAND_PLAIN_URL_LINK, "Choose Org-link type: 's' = section, 'o' = occur");
           } else {
             t.startRead(s, "Plain URL Link:", t.BASE_URL + t.getDefaultTarget(),
-                        "C-c to copy, ");
+                        "C-c for å kopiere, ");
             window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.select();}, 100);
           }
           return;
         }
         else if ('g' == s) {
-          t.startRead(s, "Enter section number:");
+          t.startRead(s, "Skriv inn kapittelnummer:");
           return;
         }
         // else if ('o' == s) {
@@ -1771,7 +1772,7 @@ var org_html_manager = {
         //   return;
       }
     else if ('s' == s) {
-      if("" != t.OCCUR) t.startRead(s, "Søk framover:", t.OCCUR, "RET for å bruke forrige, DEL ");
+      if("" != t.OCCUR) t.startRead(s, "Søk framover:", t.OCCUR, "ENTER for å bruke forrige, DEL ");
       else t.startRead(s, "Søk framover:", t.OCCUR);
       window.setTimeout(function(){org_html_manager.CONSOLE_INPUT.value=org_html_manager.OCCUR;org_html_manager.CONSOLE_INPUT.select();}, 100);
       return;
@@ -2193,9 +2194,9 @@ var org_html_manager = {
       t.LAST_VIEW_MODE = t.VIEW;
       if(t.PLAIN_VIEW == t.VIEW) t.infoView(true);
       if(null == t.TAGS_INDEX) {
-        t.TAGS_INDEX = 'Press any key or <a href="javascript:org_html_manager.showTagsIndex();">click here</a> to proceed.'
-          +'<br /><br />Click the headlines to expand the contents.'
-          +'<h2>Index of Tags</h2>';
+        t.TAGS_INDEX = 'Hvilken som helst knapp eller <a href="javascript:org_html_manager.showTagsIndex();">trykk her</a> for å fortsette.'
+          +'<br /><br />Trykk på overskriftene for å utvide innholdet.'
+          +'<h2>Emneknaggindeks:</h2>';
         for(var i = 0; i < t.SORTED_TAGS.length; ++i) {
           var tag = t.SORTED_TAGS[i];
           var fid = 'org-html-manager-sorted-tags-' + tag;
@@ -2211,7 +2212,7 @@ var org_html_manager = {
           t.TAGS_INDEX += '</ul></div>';
 
         }
-        t.TAGS_INDEX += '<br />Press any key or <a href="javascript:org_html_manager.showTagsIndex();">click here</a> to proceed.';
+        t.TAGS_INDEX += '<br />Hvilken som helst knapp eller <a href="javascript:org_html_manager.showTagsIndex();">trykk her</a> to proceed.';
       }
       t.WINDOW.innerHTML = t.TAGS_INDEX;
       window.scrollTo(0, 0);
