@@ -451,7 +451,7 @@ var org_html_manager = {
           case 'TOC':
           case 'TOC_DEPTH':
           case 'MOUSE_HINT':
-          case 'HELP':
+          case 'HJELP':
           case 'VIEW':
           case 'HIDE_TOC':
           case 'LOCAL_TOC':
@@ -478,7 +478,7 @@ var org_html_manager = {
     t.LINKS +=
     ((t.LINK_UP && t.LINK_UP != document.URL) ? '<a href="'+t.LINK_UP+'">Up</a> / ' : "") +
     ((t.LINK_HOME && t.LINK_HOME != document.URL) ? '<a href="'+t.LINK_HOME+'">HOME</a> / ' : "") +
-    '<a href="javascript:org_html_manager.showHelp();">HELP</a> / ';
+    '<a href="javascript:org_html_manager.showHelp();">HJELP</a> / ';
 
     t.LOAD_CHECK = window.setTimeout("OrgHtmlManagerLoadCheck()", 50);
   },
@@ -922,30 +922,30 @@ var org_html_manager = {
         +'Topp: <a accesskey="t" href="javascript:org_html_manager.navigateTo(0);">'+index_name+'</a></span>'
         +'<span style="float:right;display:inline;text-align:right;font-size:70%;">'
         + this.LINKS
-        +'<a accesskey="m" href="javascript:org_html_manager.toggleView('+i+');">toggle view</a></span>'
+        +'<a accesskey="m" href="javascript:org_html_manager.toggleView('+i+');">endre visning</a></span>'
         +'</td></tr><tr><td style="text-align:left;border-style:none;vertical-align:bottom;width:22%">';
 
       if(i>0)
         html += '<a accesskey="p" href="'+this.SECS[i-1].L
-        +'" title="Go to: '+this.removeTags(this.SECS[i-1].HEADING.innerHTML)+'">Previous</a> | ';
+        +'" title="Gå til: '+this.removeTags(this.SECS[i-1].HEADING.innerHTML)+'">Forrige</a> | ';
       else
-        html += 'Previous | ';
+        html += 'Forrige | ';
 
       if(i < this.SECS.length - 1)
         html += '<a accesskey="n" href="'+this.SECS[i+1].L
-        +'" title="Go to: '+this.removeTags(this.SECS[i+1].HEADING.innerHTML)+'">Next</a>';
+        +'" title="Gå til: '+this.removeTags(this.SECS[i+1].HEADING.innerHTML)+'">Neste</a>';
       else
-        html += 'Next';
+        html += 'Neste';
 
       html += '</td><td style="text-align:center;vertical-align:bottom;border-style:none;width:56%;">';
 
       if(i>0 && this.SECS[i].PARENT.PARENT) // != this.ROOT)
         html += '<a href="'+this.SECS[i].PARENT.L
-        +'" title="Go to: '+this.removeTags(this.SECS[i].PARENT.HEADING.innerHTML)+'">'
-        +'<span style="font-variant:small-caps;font-style:italic;">'
+        +'" title="Gå til: '+this.removeTags(this.SECS[i].PARENT.HEADING.innerHTML)+'">'
+        +'<span style="font-style:italic;">'
         +this.SECS[i].PARENT.HEADING.innerHTML+'</span></a>';
       else
-        html += '<span style="font-variant:small-caps;font-style:italic;">'+this.SECS[i].HEADING.innerHTML+'</span>';
+        html += '<span style="font-style:italic;">'+this.SECS[i].HEADING.innerHTML+'</span>';
 
       // Right:
       html += '</td><td style="text-align:right;vertical-align:bottom;border-style:none;width:22%">';
@@ -955,7 +955,7 @@ var org_html_manager = {
       this.SECS[i].BUTTONS = document.createElement("div");
       this.SECS[i].BUTTONS.innerHTML = '<div class="org-info-js_header-navigation" style="display:inline;float:right;text-align:right;font-size:70%;font-weight:normal;">'
         + this.LINKS
-        + '<a accesskey="m" href="javascript:org_html_manager.toggleView('+i+');">toggle view</a></div>';
+        + '<a accesskey="m" href="javascript:org_html_manager.toggleView('+i+');">endre visning</a></div>';
       if(this.SECS[i].FOLDER)
         // this.SECS[i].HEADING.appendChild(this.SECS[i].BUTTONS);
         this.SECS[i].DIV.insertBefore(this.SECS[i].BUTTONS, this.SECS[i].HEADING); //div.firstChild.nextSibling);
@@ -970,7 +970,7 @@ var org_html_manager = {
       {
         var navi2 = document.createElement("div");
         navi2.className="org-info-js_local-toc";
-        html = 'Contents:<br /><ul>';
+        html = 'Innhold:<br /><ul>';
         for(var k=0; k < this.SECS[i].CHILDREN.length; ++k) {
           html += '<li><a href="'
             +this.SECS[i].CHILDREN[k].L+'">'
@@ -1015,7 +1015,7 @@ var org_html_manager = {
       var slide = this.SLIDE_VIEW;
       eval("this."+eval_key+"="+eval_val+";");
     }
-    else if("HELP" == eval_key)
+    else if("HJELP" == eval_key)
       eval("this.STARTUP_MESSAGE="+eval_val+";");
     else {
       if(eval_val)
