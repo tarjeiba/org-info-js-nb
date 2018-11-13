@@ -1,6 +1,4 @@
-# YUI=/usr/share/java/yuicompressor-2.4.6.jar
-# 201501290914: Using https://github.com/yui/yuicompressor/releases/download/v2.4.8/yuicompressor-2.4.8.jar
-YUI=/tmp/yuicompressor-2.4.8.jar
+YUI=/usr/share/java/yuicompressor-2.4.8.jar
 
 MINIFY_OTPIONS=	 --preserve-semi --line-break 80
 
@@ -9,7 +7,6 @@ TMPv = tmp-version.js
 TMPs = tmp-min.js
 
 all: minify
-
 
 minify: version sed.txt
 	@if [ -f $(TMPv) ] &&  [ -f $(TMPs) ]; then \
